@@ -1,8 +1,8 @@
+import styled from "styled-components"
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import HomePage from "./pages/Homepage/HomePage"
 import Cadastro from "./pages/Cadastro/Cadastro"
+import Habitos from "./pages/Habitos/Habitos"
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import './App.css'
 
@@ -12,14 +12,14 @@ function App() {
     <>
       <BrowserRouter>
 
-      <NavContainer>CINEFLEX</NavContainer>
-
       <Routes>
 
       <Route path='/' element={  <HomePage /> } />
-      <Route path='/cadastro element={ <Cadastro/> } />
-      <Route path='/assentos/:idSession' element={<SeatsPage />} />
-      <Route path='/sucesso' element={<SuccessPage />} />
+
+      <Route path='/cadastro' element={  <Cadastro/> } />
+
+      <Route path='/habitos' element={  <Habitos/> } />
+
 
       </Routes>
 

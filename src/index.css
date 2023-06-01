@@ -1,69 +1,82 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
-  margin: 0;
+  background: #E5E5E5;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  justify-content: center;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.containerHome {
+  width: 375px;
+  height: 667px;
+  background-color: #FFFFFF;
+  border-radius: 1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.containerHome img {
+  margin-top: 80px;
+  width: 154px;
+  height: 80px;
+  background-color: #FFFFFF;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.containerHome h1 {
+  font-family: 'Playball';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 68.982px;
+  line-height: 86px;
+  text-align: center;
+  color: #126BA5;
+}
+.containerHome h2 {
+  margin-top: 25px;
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13.976px;
+  line-height: 17px;
+  text-align: center;
+  text-decoration-line: underline;
+  color: #52B6FF;
+}
+
+.containerForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+.containerForm input {
+  margin-top: 6px;
+  box-sizing: border-box;
+  width: 303px;
+  height: 45px;
+  background: #FFFFFF;
+  border: 1px solid #D4D4D4;
+  border-radius: 5px;
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19.976px;
+  line-height: 25px;
+  color: #DBDBDB;
+}
+
+.containerForm button {
+  margin-top: 6px;
+  width: 303px;
+  height: 45px;
+  background: #52B6FF;
+  border-radius: 4.63636px;
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20.976px;
+  line-height: 26px;
+  text-align: center;
+  color: #FFFFFF;
 }
