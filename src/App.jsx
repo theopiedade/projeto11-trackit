@@ -1,3 +1,5 @@
+import Heading from './Heading.js';
+import Section from './Section.js';
 import styled from "styled-components"
 import { useState } from 'react'
 import HomePage from "./pages/Homepage/HomePage"
