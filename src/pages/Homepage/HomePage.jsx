@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { useParams, useNavigate, useLocation} from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 
 export default function HomePage () {
@@ -10,10 +11,11 @@ export default function HomePage () {
     const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
     const [formStatus, setFormStatus] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     function sendRequest(event) {
-        event.preventDefault();
         setFormStatus(true);
+        event.preventDefault();
         const data = {
         	email: email,
             password: password
@@ -51,7 +53,16 @@ export default function HomePage () {
                 <form className="containerForm" onSubmit={sendRequest}>
                     <input data-test="email-input" value={email} type="email" disabled={formStatus} onChange={e => setEmail(e.target.value)}  placeholder="Email" />
                     <input data-test="password-input" value={password} type="password" disabled={formStatus} onChange={e => setPassword(e.target.value)} placeholder="Senha" />
-                    <button data-test="login-btn" disabled={formStatus}>Entrar</button>
+                    <button data-test="login-btn" disabled={formStatus}>
+                    {
+                formStatus? (
+                    <div className="loader-container">
+                        <ClipLoader color={'#fff'} loading={formStatus} size={15} />
+                    </div>
+                    ) : (
+                    "Entrar"
+                 ) }
+                    </button>
                 </form>
             </ContainerForm> 
         <h2 data-test="signup-link" onClick={createAccount}>Não tem uma conta? Cadastre-se!</h2>
@@ -138,4 +149,21 @@ export const ContainerHome = styled.div`
       }
   
   }
+  `
+  export const Spinner = styled.div`
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  `
+
+  export const LoadingSpinner = styled.div`
+    width: 50px;
+    height: 50px;
+    border: 10px solid #f3f3f3; /* Light grey */
+    border-top: 10px solid #383636; /* Black */
+    border-radius: 50%;
+    animation: spinner 1.5s linear infinite;
   `
