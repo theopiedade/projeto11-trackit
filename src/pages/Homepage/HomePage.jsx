@@ -33,8 +33,8 @@ export default function HomePage () {
 
       function loginError (answer) {
         console.log("Deu erro");
-        console.log("Erro:"+answer.code+" Msg:"+answer.message);
-        alert("Erro: "+answer.message);
+        console.log("Erro:"+answer.code+" Msg:"+answer.response.data.message);
+        alert(answer.response.data.message);
         setFormStatus(false);
       }
 

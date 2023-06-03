@@ -17,7 +17,7 @@ export default function Cadastro () {
     }
 
     function signUpError(answer) {
-        alert("Erro: "+answer.message);
+        alert(answer.response.data.message);
         setFormStatus(false);
     }
     
