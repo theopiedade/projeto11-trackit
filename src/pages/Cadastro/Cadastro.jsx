@@ -47,14 +47,14 @@ export default function Cadastro () {
             
             <ContainerForm> 
             <form className="containerForm" onSubmit={sendRequest}>
-                <input value={email} type="email" disabled={formStatus} onChange={e => setEmail(e.target.value)}  placeholder="Email" />
-                <input value={password} type="password" disabled={formStatus} onChange={e => setPassword(e.target.value)} placeholder="Senha" />
-                <input value={name} type="text" disabled={formStatus} onChange={e => setName(e.target.value)} placeholder="Nome" />
-                <input value={foto} type="text" disabled={formStatus} onChange={e => setFoto(e.target.value)} placeholder="Foto" />
-                <button>Entrar</button>
+                <input data-test="email-input" value={email} type="email" disabled={formStatus} onChange={e => setEmail(e.target.value)}  placeholder="Email" />
+                <input data-test="password-input" value={password} type="password" disabled={formStatus} onChange={e => setPassword(e.target.value)} placeholder="Senha" />
+                <input data-test="user-name-input" value={name} type="text" disabled={formStatus} onChange={e => setName(e.target.value)} placeholder="Nome" />
+                <input data-test="user-image-input" value={foto} type="text" disabled={formStatus} onChange={e => setFoto(e.target.value)} placeholder="Foto" />
+                <button data-test="signup-btn" >Entrar</button>
             </form>
             </ContainerForm> 
-        <h2 onClick={returnHome}>Já tem uma conta? Faça login!</h2>
+        <h2 data-test="login-link" onClick={returnHome}>Já tem uma conta? Faça login!</h2>
         </ContainerHome> 
 
     );

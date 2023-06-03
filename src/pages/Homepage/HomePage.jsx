@@ -49,12 +49,12 @@ export default function HomePage () {
         <h1>TrackIt</h1>       
             <ContainerForm> 
                 <form className="containerForm" onSubmit={sendRequest}>
-                    <input value={email} type="email" disabled={formStatus} onChange={e => setEmail(e.target.value)}  placeholder="Email" />
-                    <input value={password} type="password" disabled={formStatus} onChange={e => setPassword(e.target.value)} placeholder="Senha" />
-                    <button disabled={formStatus}>Entrar</button>
+                    <input data-test="email-input" value={email} type="email" disabled={formStatus} onChange={e => setEmail(e.target.value)}  placeholder="Email" />
+                    <input data-test="password-input" value={password} type="password" disabled={formStatus} onChange={e => setPassword(e.target.value)} placeholder="Senha" />
+                    <button data-test="login-btn" disabled={formStatus}>Entrar</button>
                 </form>
             </ContainerForm> 
-        <h2 onClick={createAccount}>Não tem uma conta? Cadastre-se!</h2>
+        <h2 data-test="signup-link" onClick={createAccount}>Não tem uma conta? Cadastre-se!</h2>
         </ContainerHome> 
     );
 }
