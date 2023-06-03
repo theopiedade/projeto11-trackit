@@ -53,7 +53,7 @@ export default function Cadastro () {
                 <input data-test="password-input" value={password} type="password" disabled={formStatus} onChange={e => setPassword(e.target.value)} placeholder="Senha" />
                 <input data-test="user-name-input" value={name} type="text" disabled={formStatus} onChange={e => setName(e.target.value)} placeholder="Nome" />
                 <input data-test="user-image-input" value={foto} type="text" disabled={formStatus} onChange={e => setFoto(e.target.value)} placeholder="Foto" />
-                <button data-test="signup-btn">
+                <button data-test="signup-btn" disabled={formStatus}>
                 {
                 formStatus? (
                     <div className="loader-container">
