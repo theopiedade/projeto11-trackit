@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useParams, useNavigate, useLocation} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -11,7 +11,6 @@ export default function HomePage () {
     const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
     const [formStatus, setFormStatus] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
 
     function sendRequest(event) {
         setFormStatus(true);
