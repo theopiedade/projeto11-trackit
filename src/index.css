@@ -4,15 +4,213 @@ body {
   justify-content: center;
 }
 
-.containerHome {
+.containerBase {
+  position: relative;
   width: 375px;
   height: 667px;
-  background-color: #FFFFFF;
+  background:  #F2F2F2;
   border-radius: 1px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+}
+
+.containerTop {
+  width: 375px;
+  height: 70px;
+  background: #126BA5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+}
+
+.containerTop h1 {
+  margin-left: 18px;
+  font-family: 'Playball';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 38.982px;
+  line-height: 49px;
+  color: #FFFFFF; 
+}
+
+.containerTop img {
+  margin-right: 18px;
+  width: 51px;
+  height: 51px;
+  left: 306px;
+  top: 9px;
+  background: url(image.png);
+  border-radius: 98.5px;
+}
+
+.containerMid {
+  margin-top: 28px;
+  margin-left: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-family: 'Lexend Deca';
+  font-style: normal;
+}
+
+.containerMid h1 {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22.976px;
+  line-height: 29px;
+  color: #126BA5; 
+}
+
+.containerMid h2 {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17.976px;
+  line-height: 22px;
+  color: #BABABA;
+}
+
+.containerMid h3 {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17.976px;
+  line-height: 22px;
+  color: #8FC549;
+}
+
+.containerHabits {
+  margin-top: 10px;
+  width: 340px;
+  height: 94px;
+  background: #FFFFFF;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.containerHabitsText {
+  margin-top: 13px;
+  margin-left: 15px;
+  margin-bottom: 13px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-family: 'Lexend Deca';
+  font-style: normal;
+}
+
+.containerHabitsText h1 {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 25px;
+  color: #666666;
+  margin-bottom: 7px;
+}
+
+.containerHabitsSequenceAndRecord {
+  display: flex;
+  flex-direction: row;
+}
+
+.containerHabitsSequenceAndRecord h1 {
+  margin-bottom: 0px;
+  display: flex;
+  justify-content: flex-start, center;
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.976px;
+  line-height: 16px;
+  color: #666666;
+}
+
+.containerHabitsSequenceAndRecord h2 {
+  margin-bottom: 0px;
+  margin-left: 3px;
+  display: flex;
+  justify-content: flex-start, center;
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.976px;
+  line-height: 16px;
+  color: #8FC549;
+}
+
+.containerHabitsCheck {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 13px;
+  box-sizing: border-box;
+  width: 69px;
+  height: 69px;
+  background: #EBEBEB;
+  border: 1px solid #E7E7E7;
+  border-radius: 5px;
+}
+
+.containerHabitsChecked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 13px;
+  box-sizing: border-box;
+  width: 69px;
+  height: 69px;
+  background: #8FC549;
+  border: 1px solid #8FC549;
+  border-radius: 5px;
+}
+
+.containerBottomMenu {
+  z-index: 0;
+  position: absolute;
+  width: 375px;
+  height: 70px;
+  left: 0px;
+  bottom: 0px;
+  background: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+}
+
+.containerBottomMenu h1 {
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17.976px;
+  line-height: 22px;
+  text-align: center;
+  color: #52B6FF;
+  margin-left: 36px;
+  margin-right: 36px;
+}
+
+.containerCircle {
+  position: absolute;
+  width: 91px;
+  height: 91px;
+  left: 80px;
+  bottom: -30px;
+  background: #52B6FF;
+  border-radius: 50%;
+  margin: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #FFFFFF;
 }
 
 .containerHome img {
