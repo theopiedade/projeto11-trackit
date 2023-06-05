@@ -13,12 +13,13 @@ export default function App() {
 
   const [userLogged, setUserLogged] = useState("");
   const [daylyProgress, setDaylyProgress] = useState("");
+  const [userData, setUserData,] = useState([]);
 
   axios.defaults.headers.common['Authorization'] = 'gKRxLmMLBYEInirlQ2e3FNVt';
 
   return (
     <>
-    <Context.Provider user={userLogged} progress={daylyProgress}>
+    <Context.Provider value={[userData,setUserData]}>
           <BrowserRouter>
 
                 <Routes>

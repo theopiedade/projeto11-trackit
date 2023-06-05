@@ -1,7 +1,8 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext} from 'react';
 import axios from 'axios';
+import Context from "../../Context";
 import ClipLoader from 'react-spinners/ClipLoader';
 
 
@@ -11,6 +12,7 @@ export default function HomePage () {
     const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
     const [formStatus, setFormStatus] = useState(false);
+    const [userData, setUserData] = useContext(Context);
 
     function sendRequest(event) {
         setFormStatus(true);
@@ -19,15 +21,17 @@ export default function HomePage () {
         	email: email,
             password: password
         };
-        console.log("email:"+data.email);
-        console.log("name:"+data.password);
+        //console.log("email:"+data.email);
+        //console.log("name:"+data.password);
         console.log("Server Post");
         const query = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', data);
         query.then(loginSuccess); 
         query.catch(loginError);
       }
 
-      function loginSuccess () {
+      function loginSuccess (answer) {
+        console.log(answer.data);
+        setUserData(answer.data);
         console.log("Login Success!");
         navigate("/hoje");
       }

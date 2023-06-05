@@ -1,11 +1,80 @@
 import styled from "styled-components";
+import Context from "../../Context";
+import { useContext, useState, useEffect} from "react";
+import axios from 'axios';
+import { Navigate } from "react-router-dom";
+import { useParams, useNavigate} from 'react-router-dom';
+
+const weekDays = [
+    "Domingo",
+    "Segunda", 
+    "Terça",
+    "Quarta",
+    "Quinta",
+    "Sexta",
+    "Sábado"
+]
+
+
 
 export default function Hoje () {
+    const [userData, setUserData] = useContext(Context);
+    const navigate = useNavigate();
+    const [json, setJson] = useState([]);
+
+    const today = new Date();
+    const day = today.getDate().toString().padStart(2,'0');
+    const month = String(today.getMonth() + 1).padStart(2,'0');
+    const DayName = weekDays[today.getDay()];
+    const actualDate = `${DayName}, ${day}/${month}`;
+    console.log("Data Atual: "+actualDate);
+
+    useEffect(() => {
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + userData.token
+            }
+        }
+
+        const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`;
+    
+        const promise = axios.get(URL,config);
+    
+        promise.then((answer) => {
+          console.log(answer.data);
+          setJson(answer.data);
+        }); // se der certo e os dados chegare
+    
+        promise.catch((error) => {
+          console.log(error.response.data);
+        }); // se der erro
+    
+      }, []);
+
     return (
         <ContainerBase>
+
+            <div data-test="header">
             <ContainerTop>  
-            
+                <h1>TrackIt</h1>
+                <img data-test="avatar" src={userData.image} alt="User Image"/>
             </ContainerTop> 
+            </div>
+
+            <ContainerMid>
+                <h1 data-test="today"> {actualDate} </h1>
+            </ContainerMid>
+
+            <div data-test="menu">
+            <ContainerBottomMenu>
+                
+                    <h1 data-test="habit-link" onClick={() => navigate("/habitos")}>Hábitos</h1>
+                    <ContainerCircle> <div data-test="today-link" onClick={() => navigate("/hoje")}>Hoje</div> </ContainerCircle>
+                    <h1 data-test="history-link" onClick={() => navigate("/historico")}>Histórico</h1>
+              
+            </ContainerBottomMenu>
+            </div>
+
         </ContainerBase>
     )
 }
@@ -22,6 +91,7 @@ const ContainerBase = styled.div`
 `
   
 const ContainerTop = styled.div`
+    position: fixed;
     width: 375px;
     height: 70px;
     background: #126BA5;
@@ -50,8 +120,8 @@ const ContainerTop = styled.div`
     border-radius: 98.5px;
   }
  ` 
-const containerMid = styled.div`
-    margin-top: 28px;
+const ContainerMid = styled.div`
+    margin-top: 98px;
     margin-left: 18px;
     display: flex;
     flex-direction: column;
@@ -167,7 +237,7 @@ const containerMid = styled.div`
     border: 1px solid #8FC549;
     border-radius: 5px;
   `
- const containerBottomMenu = styled.div`
+ const ContainerBottomMenu = styled.div`
     z-index: 0;
     position: absolute;
     width: 375px;
@@ -192,11 +262,11 @@ const containerMid = styled.div`
   }
   `
 
-  const containerCircle = styled.div`
+  const ContainerCircle = styled.div`
     position: absolute;
     width: 91px;
     height: 91px;
-    left: 80px;
+    left: 90px;
     bottom: -30px;
     background: #52B6FF;
     border-radius: 50%;
