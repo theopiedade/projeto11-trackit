@@ -28,7 +28,7 @@ export default function App() {
                   <Route path='/cadastro' element={  <Cadastro/> } />
                   <Route path='/hoje' element={  <Hoje/> } />
                   <Route path='/habitos' element={  <Habitos/> } />
-                  <Route path='/habitos' element={  <Historico/> } />
+                  <Route path='/historico' element={  <Historico/> } />
 
                 </Routes>
 

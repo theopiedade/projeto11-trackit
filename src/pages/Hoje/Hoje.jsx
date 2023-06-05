@@ -4,6 +4,7 @@ import { useContext, useState, useEffect} from "react";
 import axios from 'axios';
 import { Navigate } from "react-router-dom";
 import { useParams, useNavigate} from 'react-router-dom';
+import Habits from "../Habits"
 
 const weekDays = [
     "Domingo",
@@ -21,6 +22,7 @@ export default function Hoje () {
     const [userData, setUserData] = useContext(Context);
     const navigate = useNavigate();
     const [json, setJson] = useState([]);
+    const [check, setCheck] = useState("");
 
     const today = new Date();
     const day = today.getDate().toString().padStart(2,'0');
@@ -41,8 +43,10 @@ export default function Hoje () {
         const promise = axios.get(URL,config);
     
         promise.then((answer) => {
-          console.log(answer.data);
+          console.log("Json:"+answer.data);
           setJson(answer.data);
+
+          console.log("Json.length "+json.length);
         }); // se der certo e os dados chegare
     
         promise.catch((error) => {
@@ -51,6 +55,35 @@ export default function Hoje () {
     
       }, []);
 
+    if (json.length == 0 || json == undefined || json == null) { 
+        return (
+            <ContainerBase>
+    
+                <div data-test="header">
+                <ContainerTop>  
+                    <h1>TrackIt</h1>
+                    <img data-test="avatar" src={userData.image} alt="User Image"/>
+                </ContainerTop> 
+                </div>
+    
+                <ContainerMid>
+                    <h1 data-test="today"> {actualDate} </h1>
+                    <h2 data-test="today-counter"> Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear! </h2>
+                </ContainerMid>
+                    <div data-test="menu">
+                    <ContainerBottomMenu>
+                
+                    <h1 data-test="habit-link" onClick={() => navigate("/habitos")}>Hábitos</h1>
+                    <ContainerCircle> <div data-test="today-link" onClick={() => navigate("/hoje")}>Hoje</div> </ContainerCircle>
+                    <h1 data-test="history-link" onClick={() => navigate("/historico")}>Histórico</h1>
+              
+                    </ContainerBottomMenu>
+            </div>
+           
+           </ContainerBase>
+        )
+    }
+    else {
     return (
         <ContainerBase>
 
@@ -63,6 +96,17 @@ export default function Hoje () {
 
             <ContainerMid>
                 <h1 data-test="today"> {actualDate} </h1>
+                <h2> { }% dos hábitos concluídos </h2>
+            
+                {
+                json.map(item => (
+               <Habits 
+               id={item.id} name={item.name} done={item.done} currentSequence={item.currentSequence} 
+               highestSequence={item.highestSequence} check={check} setCheck={setCheck} 
+               />
+
+            ))}
+
             </ContainerMid>
 
             <div data-test="menu">
@@ -77,6 +121,7 @@ export default function Hoje () {
 
         </ContainerBase>
     )
+      }
 }
 
 const ContainerBase = styled.div`
@@ -154,89 +199,7 @@ const ContainerMid = styled.div`
   }
   `
 
-  const containerHabits = styled.div`
-    margin-top: 10px;
-    width: 340px;
-    height: 94px;
-    background: #FFFFFF;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
- `
   
-  const containerHabitsText = styled.div`
-    margin-top: 13px;
-    margin-left: 15px;
-    margin-bottom: 13px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    font-family: 'Lexend Deca';
-    font-style: normal;
- h1 {
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
-    color: #666666;
-    margin-bottom: 7px;
-  }
-  `
-
-  const containerHabitsSequenceAndRecord = styled.div`
-    display: flex;
-    flex-direction: row;  
-  h1 {
-    margin-bottom: 0px;
-    display: flex;
-    justify-content: flex-start, center;
-    font-family: 'Lexend Deca';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12.976px;
-    line-height: 16px;
-    color: #666666;
-    }
-  h2 {
-    margin-bottom: 0px;
-    margin-left: 3px;
-    display: flex;
-    justify-content: flex-start, center;
-    font-family: 'Lexend Deca';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12.976px;
-    line-height: 16px;
-    color: #8FC549;
-  }
-  `
-
-  const containerHabitsCheck = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 13px;
-    box-sizing: border-box;
-    width: 69px;
-    height: 69px;
-    background: #EBEBEB;
-    border: 1px solid #E7E7E7;
-    border-radius: 5px;
-`
-  
- const containerHabitsChecked = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 13px;
-    box-sizing: border-box;
-    width: 69px;
-    height: 69px;
-    background: #8FC549;
-    border: 1px solid #8FC549;
-    border-radius: 5px;
-  `
  const ContainerBottomMenu = styled.div`
     z-index: 0;
     position: absolute;
