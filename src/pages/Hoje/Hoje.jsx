@@ -2,8 +2,6 @@ import styled from "styled-components";
 import Context from "../../Context";
 import { useContext, useState, useEffect} from "react";
 import axios from 'axios';
-import { Navigate } from "react-router-dom";
-import { useParams, useNavigate} from 'react-router-dom';
 import Habits from "../Habits"
 import Topo from "../Fixed/Topo";
 import Menu from "../Fixed/Menu";
@@ -18,11 +16,8 @@ const weekDays = [
     "Sábado"
 ]
 
-
-
 export default function Hoje () {
     const [userData, setUserData] = useContext(Context);
-    const navigate = useNavigate();
     const [json, setJson] = useState([]);
     const [check, setCheck] = useState("");
     const [percent, setPercent] = useState(0);
@@ -65,11 +60,11 @@ export default function Hoje () {
           }
           
 
-        }); // se der certo e os dados chegare
+        }); // if ok
     
         promise.catch((error) => {
           console.log(error.response.data);
-        }); // se der erro
+        }); // if go bad, error
     
       }, []);
 
@@ -117,7 +112,7 @@ export default function Hoje () {
       }
 }
 
-const ContainerBase = styled.div`
+export const ContainerBase = styled.div`
     position: relative;
     width: 375px;
     height: 667px;
@@ -128,7 +123,7 @@ const ContainerBase = styled.div`
     justify-content: flex-start;
 `
 
-const ContainerMid = styled.div`
+export const ContainerMid = styled.div`
     margin-top: 98px;
     margin-left: 18px;
     display: flex;
