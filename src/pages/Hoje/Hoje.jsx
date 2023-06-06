@@ -5,6 +5,8 @@ import axios from 'axios';
 import { Navigate } from "react-router-dom";
 import { useParams, useNavigate} from 'react-router-dom';
 import Habits from "../Habits"
+import Topo from "../Fixed/Topo";
+import Menu from "../Fixed/Menu";
 
 const weekDays = [
     "Domingo",
@@ -23,13 +25,15 @@ export default function Hoje () {
     const navigate = useNavigate();
     const [json, setJson] = useState([]);
     const [check, setCheck] = useState("");
+    const [percent, setPercent] = useState(0);
+    const [concluded, setConcluded] = useState(0);
+    const [countIds, setCountIds] = useState(0);
 
     const today = new Date();
     const day = today.getDate().toString().padStart(2,'0');
     const month = String(today.getMonth() + 1).padStart(2,'0');
     const DayName = weekDays[today.getDay()];
     const actualDate = `${DayName}, ${day}/${month}`;
-    console.log("Data Atual: "+actualDate);
 
     useEffect(() => {
         let config = {
@@ -43,10 +47,24 @@ export default function Hoje () {
         const promise = axios.get(URL,config);
     
         promise.then((answer) => {
-          console.log("Json:"+answer.data);
           setJson(answer.data);
+        
+          if (json.length > 0) {
+            json.map(item => {
+                    if (item.done == true) {
+                        const contConcluded = concluded;
+                        contConcluded+=1;
+                        setConcluded(contConcluded);
+                    }
+                    const countJsonIds = countIds;
+                    countJsonIds+=1;
+                    setCountIds(countJsonIds);
+                })
+                const calcPercent = Math.round((concluded/countIds)*100);
+                setPercent(calcPercent);
+          }
+          
 
-          console.log("Json.length "+json.length);
         }); // se der certo e os dados chegare
     
         promise.catch((error) => {
@@ -59,26 +77,14 @@ export default function Hoje () {
         return (
             <ContainerBase>
     
-                <div data-test="header">
-                <ContainerTop>  
-                    <h1>TrackIt</h1>
-                    <img data-test="avatar" src={userData.image} alt="User Image"/>
-                </ContainerTop> 
-                </div>
+                <Topo/>
     
                 <ContainerMid>
                     <h1 data-test="today"> {actualDate} </h1>
-                    <h2 data-test="today-counter"> Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear! </h2>
+                    <h2 data-test="today-counter"> Nenhum hábito concluído ainda</h2>
                 </ContainerMid>
-                    <div data-test="menu">
-                    <ContainerBottomMenu>
-                
-                    <h1 data-test="habit-link" onClick={() => navigate("/habitos")}>Hábitos</h1>
-                    <ContainerCircle> <div data-test="today-link" onClick={() => navigate("/hoje")}>Hoje</div> </ContainerCircle>
-                    <h1 data-test="history-link" onClick={() => navigate("/historico")}>Histórico</h1>
-              
-                    </ContainerBottomMenu>
-            </div>
+
+                <Menu/>
            
            </ContainerBase>
         )
@@ -87,16 +93,11 @@ export default function Hoje () {
     return (
         <ContainerBase>
 
-            <div data-test="header">
-            <ContainerTop>  
-                <h1>TrackIt</h1>
-                <img data-test="avatar" src={userData.image} alt="User Image"/>
-            </ContainerTop> 
-            </div>
+            <Topo/>
 
             <ContainerMid>
                 <h1 data-test="today"> {actualDate} </h1>
-                <h2> { }% dos hábitos concluídos </h2>
+                <h2> {percent}% dos hábitos concluídos </h2>
             
                 {
                 json.map(item => (
@@ -109,15 +110,7 @@ export default function Hoje () {
 
             </ContainerMid>
 
-            <div data-test="menu">
-            <ContainerBottomMenu>
-                
-                    <h1 data-test="habit-link" onClick={() => navigate("/habitos")}>Hábitos</h1>
-                    <ContainerCircle> <div data-test="today-link" onClick={() => navigate("/hoje")}>Hoje</div> </ContainerCircle>
-                    <h1 data-test="history-link" onClick={() => navigate("/historico")}>Histórico</h1>
-              
-            </ContainerBottomMenu>
-            </div>
+            <Menu/>
 
         </ContainerBase>
     )
@@ -134,37 +127,7 @@ const ContainerBase = styled.div`
     flex-direction: column;
     justify-content: flex-start;
 `
-  
-const ContainerTop = styled.div`
-    position: fixed;
-    width: 375px;
-    height: 70px;
-    background: #126BA5;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
-  h1 {
-    margin-left: 18px;
-    font-family: 'Playball';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 38.982px;
-    line-height: 49px;
-    color: #FFFFFF; 
-  }
-  
-  img {
-    margin-right: 18px;
-    width: 51px;
-    height: 51px;
-    left: 306px;
-    top: 9px;
-    background: url(image.png);
-    border-radius: 98.5px;
-  }
- ` 
 const ContainerMid = styled.div`
     margin-top: 98px;
     margin-left: 18px;
@@ -197,51 +160,4 @@ const ContainerMid = styled.div`
     line-height: 22px;
     color: #8FC549;
   }
-  `
-
-  
- const ContainerBottomMenu = styled.div`
-    z-index: 0;
-    position: absolute;
-    width: 375px;
-    height: 70px;
-    left: 0px;
-    bottom: 0px;
-    background: #FFFFFF;
-    display: flex;
-    justify-content: space-between;
-    display: flex;
-    align-items: center;
-  h1 {
-    font-family: 'Lexend Deca';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 17.976px;
-    line-height: 22px;
-    text-align: center;
-    color: #52B6FF;
-    margin-left: 36px;
-    margin-right: 36px;
-  }
-  `
-
-  const ContainerCircle = styled.div`
-    position: absolute;
-    width: 91px;
-    height: 91px;
-    left: 90px;
-    bottom: -30px;
-    background: #52B6FF;
-    border-radius: 50%;
-    margin: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Lexend Deca';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
-    text-align: center;
-    color: #FFFFFF;
   `
