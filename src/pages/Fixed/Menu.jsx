@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import Context from "../../Context";
 import { useContext} from "react";
-import { Navigate } from "react-router-dom";
-import { useParams, useNavigate} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 export default function Menu () {
     const navigate = useNavigate();

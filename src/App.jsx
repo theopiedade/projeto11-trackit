@@ -1,7 +1,7 @@
 import { useState } from 'react'
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import axios from 'axios';
 import Context from "./Context"
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import HomePage from "./pages/Homepage/HomePage";
 import Cadastro from "./pages/Cadastro/Cadastro";
 import Hoje from "./pages/Hoje/Hoje";

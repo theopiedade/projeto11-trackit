@@ -1,8 +1,9 @@
 import {ContainerHome, ContainerForm} from "../Homepage/HomePage";
 import { useNavigate} from 'react-router-dom';
 import { useState } from 'react';
-import axios from 'axios';
 import ClipLoader from 'react-spinners/ClipLoader';
+import axios from 'axios';
+
 
 
 export default function Cadastro () {

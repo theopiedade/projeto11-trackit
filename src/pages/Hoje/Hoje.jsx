@@ -1,6 +1,6 @@
+import { useContext, useState, useEffect} from "react";
 import styled from "styled-components";
 import Context from "../../Context";
-import { useContext, useState, useEffect} from "react";
 import axios from 'axios';
 import Habits from "../Habits"
 import Topo from "../Fixed/Topo";
