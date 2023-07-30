@@ -15,7 +15,7 @@ export default function App() {
   const [daylyProgress, setDaylyProgress] = useState("");
   const [userData, setUserData,] = useState([]);
 
-  axios.defaults.headers.common['Authorization'] = 'gKRxLmMLBYEInirlQ2e3FNVt';
+  axios.defaults.headers.common['Authorization'] = 'L1wiG51X86bdnr2TDrvEf31Q';
 
   return (
     <>

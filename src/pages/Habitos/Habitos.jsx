@@ -7,66 +7,95 @@ import Habits from "../Habits"
 import Topo from "../Fixed/Topo";
 import Menu from "../Fixed/Menu";
 import {ContainerBase, ContainerMid} from "../Hoje/Hoje";
+import WeekDays from "./WeekDays";
 
 export default function Habitos() {
-
+    const [userData, setUserData] = useContext(Context);
     const [habit, setHabit] = useState("");
+    const [json, setJson] = useState([]);
+    const [daysChecked, setDaysChecked] = useState([0]);
+    const [countHabits, setCountHabits] = useState(0);
 
     function createHabit () {
 
     }
 
-    return(
-        <ContainerBase>
+    useEffect(() => {
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + userData.token
+            }
+        }
+
+        const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`;
     
-        <Topo/>
+        const promise = axios.get(URL,config);
+    
+        promise.then((answer) => {
+          setJson(answer.data);
+        }); // if ok
+    
+        promise.catch((error) => {
+          console.log(error.response.data);
+        }); // if go bad, error
+    
+      }, []); // useEffect end
 
-        <ContainerMid>
-           <MyHabitsTop>
-            <h1> Meus Hábitos </h1><p>+</p>
-            </MyHabitsTop>
-            <h2> Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear! </h2>
+    if (json.length == 0 || json == undefined || json == null) { 
+        return(
+                <ContainerBase>
+                    <Topo/>
+                    <ContainerMid>
+                            <MyHabitsTop>
+                            <h1> Meus Hábitos </h1><p>+</p>
+                            </MyHabitsTop>
+                            <h2> Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear! </h2>
+                        <ContainerCreateHabit>
+                            <ContainerForm>
+                            <form onSubmit={createHabit}>
+                                <input onChange={e => setHabit(e.target.value)} placeholder="nome do hábito"></input>
+                                <WeekDays days={undefined} daysChecked={daysChecked} setDaysChecked={setDaysChecked} countHabits={countHabits} />
+                                </form>
+                            <Buttons>
+                                <h1>Cancelar</h1> <button>Salvar</button>
+                            </Buttons>
+                            </ContainerForm>
 
-            <ContainerCreateHabit>
-
-                <ContainerForm>
-
-                <form onSubmit={createHabit}>
-                    <input onChange={e => setHabit(e.target.value)} placeholder="nome do hábito"></input>
-
-                    <WeekDays>
-                    <p>D</p> <p>S</p> <p>T</p> <p>Q</p> <p>Q</p> <p>S</p>
-                    </WeekDays>
-
-                </form>
-                <Buttons>
-                    <h1>Cancelar</h1> <button>Salvar</button>
-                </Buttons>
-                </ContainerForm>
-
-            </ContainerCreateHabit>
-
-            <ContainerHabit>
-                <ContainerTitleAndDays>
-                    <TitleAndTrash>
-                        <h1> Ler 1 capítulo de livro</h1>
-                        <img src="../assets/Trash.png"/>
-                    </TitleAndTrash>
-                    <WeekDays>
-                    <p>D</p> <p>S</p> <p>T</p> <p>Q</p> <p>Q</p> <p>S</p>
-                    </WeekDays>
-                </ContainerTitleAndDays>
-             
-            </ContainerHabit>
-
-        </ContainerMid>
-
-        <Menu/>
-   
-        </ContainerBase>
-    );
+                        </ContainerCreateHabit>
+                    </ContainerMid>
+                    <Menu/>
+                </ContainerBase>
+            )
+        }
+        else {
+            setCountHabits(1);
+            return (
+                <ContainerBase>
+                    <Topo/>
+                    <ContainerMid>
+                        <MyHabitsTop>
+                        <h1> Meus Hábitos </h1><p>+</p>
+                        </MyHabitsTop>
+                        {
+                        json.map(item => (
+                        <ContainerHabit key={item.id}>
+                            <ContainerTitleAndDays>
+                                <TitleAndTrash>
+                                    <h1>{item.name}</h1>
+                                    <img src="../assets/Trash.png"/>
+                                </TitleAndTrash>
+                                <WeekDays days={item.days} daysChecked={daysChecked} setDaysChecked={setDaysChecked} countHabits={countHabits} />
+                            </ContainerTitleAndDays>
+                        </ContainerHabit>
+                        ))
+                        }
+                    </ContainerMid>
+                    <Menu/>
+                </ContainerBase>
+        )
+    
+            }
 }
-
 const MyHabitsTop = styled.div`
     display: flex;
     flex-direction: row;
@@ -118,28 +147,7 @@ const ContainerForm = styled.div`
         text-align: space-around;
     }
 `
-const WeekDays = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-     p {
-        margin-right: 4px;
-        margin-top: 8px;
-        margin-bottom: 8px;
-        width: 30px;
-        height: 30px;
-        background: #FFFFFF;
-        border: 1px solid #D5D5D5;
-        border-radius: 5px;
-        color: #DBDBDB;
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 19.976px;
-        line-height: 25px;
-        text-align: center;
-    }
-`
+
 const Buttons = styled.div`
   margin-top: 32px; 
   display: flex;

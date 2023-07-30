@@ -47,13 +47,13 @@ export default function Hoje () {
           if (json.length > 0) {
             json.map(item => {
                     if (item.done == true) {
-                        const contConcluded = concluded;
-                        contConcluded+=1;
-                        setConcluded(contConcluded);
+                        let tConcluded = concluded;
+                        tConcluded+=1;
+                        setConcluded(tConcluded);
                     }
-                    const countJsonIds = countIds;
-                    countJsonIds+=1;
-                    setCountIds(countJsonIds);
+                    let tCountIds = countIds;
+                    tCountIds+=1;
+                    setCountIds(tCountIds);
                 })
                 const calcPercent = Math.round((concluded/countIds)*100);
                 setPercent(calcPercent);
