@@ -13,11 +13,27 @@ export default function Habitos() {
     const [userData, setUserData] = useContext(Context);
     const [habit, setHabit] = useState("");
     const [json, setJson] = useState([]);
-    const [daysChecked, setDaysChecked] = useState([0]);
-    const [countHabits, setCountHabits] = useState(0);
+    const [daysSelecteds, setDaysSelecteds] = useState([]);
+    const [create, setCreate] = useState(false);
 
     function createHabit () {
+        console.log("Entrou em createHabit");
+        const data = {
+            name: habit,
+            days: daysSelecteds
+        }
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + userData.token
+            }
+        }
+        const URLPost = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`;
 
+        const post = axios.post(URLPost, data, config);
+        
+        post.then(console.log);
+        
+        post.catch(console.log);
     }
 
     useEffect(() => {
@@ -41,34 +57,33 @@ export default function Habitos() {
     
       }, []); // useEffect end
 
-    if (json.length == 0 || json == undefined || json == null) { 
+    if (json.length == 0 || json == undefined || json == null)
         return(
-                <ContainerBase>
-                    <Topo/>
-                    <ContainerMid>
-                            <MyHabitsTop>
-                            <h1> Meus Hábitos </h1><p>+</p>
-                            </MyHabitsTop>
-                            <h2> Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear! </h2>
-                        <ContainerCreateHabit>
-                            <ContainerForm>
-                            <form onSubmit={createHabit}>
-                                <input onChange={e => setHabit(e.target.value)} placeholder="nome do hábito"></input>
-                                <WeekDays days={undefined} daysChecked={daysChecked} setDaysChecked={setDaysChecked} countHabits={countHabits} />
-                                </form>
-                            <Buttons>
-                                <h1>Cancelar</h1> <button>Salvar</button>
-                            </Buttons>
-                            </ContainerForm>
+            <ContainerBase>
+                <Topo/>
+                <ContainerMid>
+                        <MyHabitsTop>
+                        <h1> Meus Hábitos </h1><button data-test="habit-create-btn" onClick={() => setCreate(true)}>+</button>
+                        </MyHabitsTop>
+                        
+                    <ContainerCreateHabit data-test="habit-create-container" create={create}>
+                        <ContainerForm>
+                        <form onSubmit={createHabit}>
+                            <input data-test="habit-name-input" onChange={e => setHabit(e.target.value)} placeholder="nome do hábito"></input>
+                            <WeekDays daysSelecteds={daysSelecteds} setDaysSelecteds={setDaysSelecteds} setCreate={setCreate} />
+                            </form>
+                        <Buttons>
+                            <button data-test="habit-create-cancel-btn" checked={false} onClick={() => setCreate(false)}> Cancelar </button> <button checked={true} data-test="habit-create-save-btn">Salvar</button>
+                        </Buttons>
+                        </ContainerForm>
 
-                        </ContainerCreateHabit>
-                    </ContainerMid>
-                    <Menu/>
-                </ContainerBase>
-            )
-        }
-        else {
-            setCountHabits(1);
+                    </ContainerCreateHabit>
+                    <h2> Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear! </h2>
+                </ContainerMid>
+                <Menu/>
+            </ContainerBase>
+        )
+        else 
             return (
                 <ContainerBase>
                     <Topo/>
@@ -84,7 +99,7 @@ export default function Habitos() {
                                     <h1>{item.name}</h1>
                                     <img src="../assets/Trash.png"/>
                                 </TitleAndTrash>
-                                <WeekDays days={item.days} daysChecked={daysChecked} setDaysChecked={setDaysChecked} countHabits={countHabits} />
+                                <WeekDays daysSelecteds={daysSelecteds} setDaysSelecteds={setDaysSelecteds} />
                             </ContainerTitleAndDays>
                         </ContainerHabit>
                         ))
@@ -93,15 +108,16 @@ export default function Habitos() {
                     <Menu/>
                 </ContainerBase>
         )
-    
-            }
 }
+
 const MyHabitsTop = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 20px;
-    p {
+    button {
+        display: flex;
+        justify-content: center;
         align-items: center;
         margin-right:18px;
         width: 40px;
@@ -125,7 +141,7 @@ const ContainerCreateHabit = styled.div`
     margin-top: 20px;
     width: 340px;
     height: 180px;
-    display: flex;
+    display: ${props => props.create ? "flex"  : "none" };
     flex-direction: column;
     background: #FFFFFF;
 `
@@ -149,7 +165,7 @@ const ContainerForm = styled.div`
 `
 
 const Buttons = styled.div`
-  margin-top: 32px; 
+  margin-top: 32px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -165,11 +181,12 @@ const Buttons = styled.div`
   }
   button {
     margin-right: 16px;
+    margin-bottom: 10px; 
     width: 84px;
     height: 35px;
     left: 257px;
     top: 277px;
-    background: #52B6FF;
+    background: ${props => props.checked ? "#FFFFFF"  : "#52B6FF" };
     border-radius: 4.63636px;
     font-family: 'Lexend Deca';
     font-style: normal;
@@ -177,7 +194,7 @@ const Buttons = styled.div`
     font-size: 15.976px;
     line-height: 20px;
     text-align: center;
-    color: #FFFFFF;
+    color: ${props => props.checked ? "#52B6FF" : "#FFFFFF" };
   }
 `
 
