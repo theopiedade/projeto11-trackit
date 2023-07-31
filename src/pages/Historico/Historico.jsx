@@ -1,5 +1,15 @@
+import Topo from "../Fixed/Topo";
+import Menu from "../Fixed/Menu";
+import {ContainerBase, ContainerMid} from "../Hoje/Hoje";
+
 export default function Historico() {
     return ( 
-        console.log("Entrou em Historic")
+        <ContainerBase>
+                <Topo/>
+                <ContainerMid>
+                    <h1> Históricos aqui </h1>
+                </ContainerMid>
+                <Menu/>
+            </ContainerBase>
     )
 }

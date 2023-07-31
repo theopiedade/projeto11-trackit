@@ -1,45 +1,52 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 
-export default function WeekDays({days, daysChecked, setDaysChecked, countHabits}) {
-    const week = ['D','S','T','Q','Q','S','S'];
- 
-   
-    useEffect(() => {
-        if (days != undefined) { 
-            setDaysChecked(days)
-            console.log("daysChecked atualizado para "+days);
-        }
-    }, []);
-    console.log("daysChecked "+daysChecked);
+export default function WeekDays({daysSelecteds, setDaysSelecteds, setCreate}) {
+    const daysOfWeek = ['D','S','T','Q','Q','S','S'];
+    const [daysChecked, setDaysChecked] = useState([false,false,false,false,false,false,false]);
 
-    function checked(props) {
-        let numCheck = props + 1;
-        if (daysChecked.indexOf(numCheck) != -1) return true;
-        else return false;
+
+
+    useEffect(() => {
+        let arrDaysChecked = daysChecked;
+        daysChecked.map((day,i) => {
+                if (daysSelecteds.indexOf(i) !== -1) {
+                    arrDaysChecked[i] = true;
+                }
+            })
+        setDaysChecked(arrDaysChecked);
+    }, []);
+
+    function selectDay(props) {
+        let arrDaysChecked = daysChecked;
+        if (daysChecked[props] === false) {
+            arrDaysChecked[props] = true;
+            setDaysChecked(arrDaysChecked);
+            setCreate(true);
+            setDaysSelecteds([...daysSelecteds,props+1]);
+        }
     }
 
-    function dayCheck(props) {
-        if (countHabits === 0) {}
-    }    
-
     return (
-    <WeekDaysContainer>
-        {
-        week.map((day, i) => (
-            <WeekDay key={i} checked={checked(i)} onClick={dayCheck(i)}>{day}</WeekDay>
-        ))
-        }
-    </WeekDaysContainer>
- )
+        <WeekDaysContainer>
+            {
+            daysOfWeek.map((day,i) => (
+                <Day key={i} data-test="habit-day" checked={daysChecked[i]} onClick={() => selectDay(i)}>
+                    {day}
+                </Day>
+            ))
+             }
+        </WeekDaysContainer>
+    )
 }
 
 const WeekDaysContainer = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
 `
-const WeekDay = styled.div`
+
+const Day = styled.button`
     margin-right: 4px;
     margin-top: 8px;
     margin-bottom: 8px;
@@ -56,3 +63,4 @@ const WeekDay = styled.div`
     line-height: 25px;
     text-align: center;
 `
+

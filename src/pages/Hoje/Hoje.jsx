@@ -141,11 +141,12 @@ export const ContainerMid = styled.div`
   }
   
   h2 {
+    margin-top: 10px;
     font-style: normal;
     font-weight: 400;
     font-size: 17.976px;
     line-height: 22px;
-    color: #BABABA;
+    color: #666;
   }
   
   h3 {
