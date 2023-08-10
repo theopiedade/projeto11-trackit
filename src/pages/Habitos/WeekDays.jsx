@@ -17,7 +17,8 @@ export default function WeekDays({daysSelecteds, setDaysSelecteds, setCreate}) {
         setDaysChecked(arrDaysChecked);
     }, []);
 
-    function selectDay(props) {
+    function selectDay(event, props) {
+        event.preventDefault();
         let arrDaysChecked = daysChecked;
         if (daysChecked[props] === false) {
             arrDaysChecked[props] = true;
@@ -31,7 +32,7 @@ export default function WeekDays({daysSelecteds, setDaysSelecteds, setCreate}) {
         <WeekDaysContainer>
             {
             daysOfWeek.map((day,i) => (
-                <Day key={i} data-test="habit-day" checked={daysChecked[i]} onClick={() => selectDay(i)}>
+                <Day key={i} data-test="habit-day" checked={daysChecked[i]} onClick={(event) => selectDay(event,i)}>
                     {day}
                 </Day>
             ))

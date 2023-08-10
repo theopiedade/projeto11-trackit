@@ -16,8 +16,10 @@ export default function Habitos() {
     const [daysSelecteds, setDaysSelecteds] = useState([]);
     const [create, setCreate] = useState(false);
 
-    function createHabit() {
-        console.log("Entrou em createHabit");
+    function createHabit(event) {
+        event.preventDefault();
+        console.log("Entrou em createHabit!");
+
         const data = {
             name: habit,
             days: daysSelecteds
@@ -32,7 +34,6 @@ export default function Habitos() {
         const post = axios.post(URLPost, data, config);
 
         post.then(console.log);
-
         post.catch(console.log);
     }
 
@@ -69,11 +70,17 @@ export default function Habitos() {
                     <ContainerCreateHabit data-test="habit-create-container" create={create}>
                         <ContainerForm>
                             <form onSubmit={createHabit}>
-                                <input data-test="habit-name-input" onChange={e => setHabit(e.target.value)} placeholder="nome do hábito"/>
+                                <input data-test="habit-name-input" onChange={e => setHabit(e.target.value)} placeholder="nome do hábito" />
                                 <WeekDays daysSelecteds={daysSelecteds} setDaysSelecteds={setDaysSelecteds} setCreate={setCreate} />
 
                                 <Buttons>
-                                    <button data-test="habit-create-cancel-btn" checked={false} onClick={() => setCreate(false)}> Cancelar </button>
+                                    <button data-test="habit-create-cancel-btn" checked={false} onClick={(event) => {
+                                        event.preventDefault();
+                                        setCreate(false);
+                                    }}>
+                                        Cancelar
+                                    </button>
+
                                     <button checked={true} data-test="habit-create-save-btn">Salvar</button>
                                 </Buttons>
                             </form>
