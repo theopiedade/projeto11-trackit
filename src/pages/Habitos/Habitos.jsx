@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import Context from "../../Context";
-import { useContext, useState, useEffect} from "react";
+import { useContext, useState, useEffect } from "react";
 import axios from 'axios';
-import { useParams, useNavigate} from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Habits from "../Habits"
 import Topo from "../Fixed/Topo";
 import Menu from "../Fixed/Menu";
-import {ContainerBase, ContainerMid} from "../Hoje/Hoje";
+import { ContainerBase, ContainerMid } from "../Hoje/Hoje";
 import WeekDays from "./WeekDays";
 
 export default function Habitos() {
@@ -16,7 +16,7 @@ export default function Habitos() {
     const [daysSelecteds, setDaysSelecteds] = useState([]);
     const [create, setCreate] = useState(false);
 
-    function createHabit () {
+    function createHabit() {
         console.log("Entrou em createHabit");
         const data = {
             name: habit,
@@ -30,9 +30,9 @@ export default function Habitos() {
         const URLPost = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`;
 
         const post = axios.post(URLPost, data, config);
-        
+
         post.then(console.log);
-        
+
         post.catch(console.log);
     }
 
@@ -44,69 +44,71 @@ export default function Habitos() {
         }
 
         const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`;
-    
-        const promise = axios.get(URL,config);
-    
+
+        const promise = axios.get(URL, config);
+
         promise.then((answer) => {
-          setJson(answer.data);
+            setJson(answer.data);
         }); // if ok
-    
+
         promise.catch((error) => {
-          console.log(error.response.data);
+            console.log(error.response.data);
         }); // if go bad, error
-    
-      }, []); // useEffect end
+
+    }, []); // useEffect end
 
     if (json.length == 0 || json == undefined || json == null)
-        return(
+        return (
             <ContainerBase>
-                <Topo/>
+                <Topo />
                 <ContainerMid>
-                        <MyHabitsTop>
+                    <MyHabitsTop>
                         <h1> Meus Hábitos </h1><button data-test="habit-create-btn" onClick={() => setCreate(true)}>+</button>
-                        </MyHabitsTop>
-                        
+                    </MyHabitsTop>
+
                     <ContainerCreateHabit data-test="habit-create-container" create={create}>
                         <ContainerForm>
-                        <form onSubmit={createHabit}>
-                            <input data-test="habit-name-input" onChange={e => setHabit(e.target.value)} placeholder="nome do hábito"></input>
-                            <WeekDays daysSelecteds={daysSelecteds} setDaysSelecteds={setDaysSelecteds} setCreate={setCreate} />
+                            <form onSubmit={createHabit}>
+                                <input data-test="habit-name-input" onChange={e => setHabit(e.target.value)} placeholder="nome do hábito"/>
+                                <WeekDays daysSelecteds={daysSelecteds} setDaysSelecteds={setDaysSelecteds} setCreate={setCreate} />
+
+                                <Buttons>
+                                    <button data-test="habit-create-cancel-btn" checked={false} onClick={() => setCreate(false)}> Cancelar </button>
+                                    <button checked={true} data-test="habit-create-save-btn">Salvar</button>
+                                </Buttons>
                             </form>
-                        <Buttons>
-                            <button data-test="habit-create-cancel-btn" checked={false} onClick={() => setCreate(false)}> Cancelar </button> <button checked={true} data-test="habit-create-save-btn">Salvar</button>
-                        </Buttons>
                         </ContainerForm>
 
                     </ContainerCreateHabit>
                     <h2> Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear! </h2>
                 </ContainerMid>
-                <Menu/>
+                <Menu />
             </ContainerBase>
         )
-        else 
-            return (
-                <ContainerBase>
-                    <Topo/>
-                    <ContainerMid>
-                        <MyHabitsTop>
+    else
+        return (
+            <ContainerBase>
+                <Topo />
+                <ContainerMid>
+                    <MyHabitsTop>
                         <h1> Meus Hábitos </h1><p>+</p>
-                        </MyHabitsTop>
-                        {
+                    </MyHabitsTop>
+                    {
                         json.map(item => (
-                        <ContainerHabit key={item.id}>
-                            <ContainerTitleAndDays>
-                                <TitleAndTrash>
-                                    <h1>{item.name}</h1>
-                                    <img src="../assets/Trash.png"/>
-                                </TitleAndTrash>
-                                <WeekDays daysSelecteds={daysSelecteds} setDaysSelecteds={setDaysSelecteds} />
-                            </ContainerTitleAndDays>
-                        </ContainerHabit>
+                            <ContainerHabit key={item.id}>
+                                <ContainerTitleAndDays>
+                                    <TitleAndTrash>
+                                        <h1>{item.name}</h1>
+                                        <img src="../assets/Trash.png" />
+                                    </TitleAndTrash>
+                                    <WeekDays daysSelecteds={daysSelecteds} setDaysSelecteds={setDaysSelecteds} />
+                                </ContainerTitleAndDays>
+                            </ContainerHabit>
                         ))
-                        }
-                    </ContainerMid>
-                    <Menu/>
-                </ContainerBase>
+                    }
+                </ContainerMid>
+                <Menu />
+            </ContainerBase>
         )
 }
 
@@ -141,7 +143,7 @@ const ContainerCreateHabit = styled.div`
     margin-top: 20px;
     width: 340px;
     height: 180px;
-    display: ${props => props.create ? "flex"  : "none" };
+    display: ${props => props.create ? "flex" : "none"};
     flex-direction: column;
     background: #FFFFFF;
 `
@@ -186,7 +188,7 @@ const Buttons = styled.div`
     height: 35px;
     left: 257px;
     top: 277px;
-    background: ${props => props.checked ? "#FFFFFF"  : "#52B6FF" };
+    background: ${props => props.checked ? "#FFFFFF" : "#52B6FF"};
     border-radius: 4.63636px;
     font-family: 'Lexend Deca';
     font-style: normal;
@@ -194,7 +196,7 @@ const Buttons = styled.div`
     font-size: 15.976px;
     line-height: 20px;
     text-align: center;
-    color: ${props => props.checked ? "#52B6FF" : "#FFFFFF" };
+    color: ${props => props.checked ? "#52B6FF" : "#FFFFFF"};
   }
 `
 
