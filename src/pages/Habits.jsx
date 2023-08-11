@@ -1,11 +1,12 @@
 import styled from "styled-components"
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 
-export default function Habits({id, name, done, currentSequence, highestSequence, check, setCheck}) {
+export default function Habits({id, name, done, currentSequence, highestSequence, check, setCheck, userData}) {
     
     function checkButton (sId, sCheck) {
-        const URL=`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${props}/check`;
+        const URL=`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`;
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + userData.token
@@ -14,7 +15,7 @@ export default function Habits({id, name, done, currentSequence, highestSequence
         const promise = axios.get(URL,config);
     
         promise.then((answer) => {
-          console.log("Ação marcada Check: "+props);
+          console.log("Ação marcada Check: "+answer);
           setCheck("true");
         }); // se der certo e os dados chegare
     
