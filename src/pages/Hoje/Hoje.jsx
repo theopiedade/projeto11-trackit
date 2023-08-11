@@ -98,7 +98,7 @@ export default function Hoje () {
                 json.map(item => (
                <Habits 
                id={item.id} name={item.name} done={item.done} currentSequence={item.currentSequence} 
-               highestSequence={item.highestSequence} check={check} setCheck={setCheck} 
+               highestSequence={item.highestSequence} check={check} userData={userData} setCheck={setCheck} 
                />
 
             ))}
