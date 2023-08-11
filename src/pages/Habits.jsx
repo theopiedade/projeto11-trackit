@@ -39,7 +39,7 @@ export default function Habits({id, name, done, currentSequence, highestSequence
                     <h1>Seu recorde:</h1> <h2>{highestSequence} dias</h2>
                 </ContainerHabitsSequenceAndRecord>
                 </div>
-                <div data-test="today-habit-check-btn" onClick={checkButton(id, check)}>
+                <div data-test="today-habit-check-btn" onClick={() => checkButton(id, check)}>
                 <ContainerHabitsCheck props={check}>
                     <img src="./assets/Check.png"/>
                 </ContainerHabitsCheck>
